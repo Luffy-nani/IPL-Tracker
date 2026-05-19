@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func writeJSON(w http.ResponseWriter, status int, data any) {
@@ -71,4 +72,11 @@ func handleSubscribe(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+func handleHealth(w http.ResponseWriter, r *http.Request) {
+	_, updatedAt := cache.Get()
+	writeJSON(w, http.StatusOK, map[string]string{
+		"status":   "ok",
+		"cacheAge": time.Since(updatedAt).String(),
+	})
 }

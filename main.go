@@ -31,6 +31,7 @@ func main() {
 			Chain(handleMatchByID)(w, r)
 		}
 	})
+	mux.HandleFunc("/health", Chain(handleHealth))
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
