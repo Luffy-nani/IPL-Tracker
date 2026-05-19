@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os" //to get the api key in env
+	"strings"
 	"time"
 )
 
@@ -32,6 +33,9 @@ func fetchMatches() error {
 	var matches []Match
 	for _, md := range apiResp.Data {
 		if len(md.Teams) < 2 {
+			continue
+		}
+		if !strings.Contains(strings.ToLower(md.Name), "ipl") {
 			continue
 		}
 		match := Match{
